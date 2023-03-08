@@ -1,6 +1,0 @@
-#developing
-/node_modules
-.env
-
-#database
-*.sql

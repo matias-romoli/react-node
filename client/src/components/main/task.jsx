@@ -3,7 +3,7 @@ import { deleteTask } from "../../utils/xfunction";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 
-function Task({ data, color, setAct, stateModal, setStateModal}) {
+function Task({ data, color, setAct }) {
   const [isActive, setActive] = useState(false);
 
   async function handleDelete(id) {
@@ -27,10 +27,7 @@ function Task({ data, color, setAct, stateModal, setStateModal}) {
       <ToastContainer />
       <div className={`task-${color} flex`}>
         <div className="task-h2">
-          <h2 className={isActive ? 'decoration': null} >
-            {" "}
-            {data.task}{" "}
-          </h2>
+          <h2 className={isActive ? "decoration" : null}> {data.task} </h2>
         </div>
         <div className={`task-span-${color} flex`}>
           <span>

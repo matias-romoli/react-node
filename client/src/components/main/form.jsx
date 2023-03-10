@@ -1,14 +1,21 @@
+import { colorContext } from "../../context/color/colorContext";
+import { TaskContext } from "../../context/task/taskContext";
 import { ToastContainer, toast } from "react-toastify";
 import { registerTask } from "../../utils/xfunction";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
 
-function Form({ color, task, setTask, setAct }) {
+
+function Form({ setAct }) {
+  const { task, setTask } = useContext(TaskContext);
+  const {colors} = useContext(colorContext);
+
   async function onSubmitTask(e) {
     e.preventDefault();
     try {
       const res = await registerTask(task);
       if (res.status === 500) {
-        toast.error(await res.json(), {
+        return toast.error(await res.json(), {
           position: "top-right",
           autoClose: 2500,
         });
@@ -25,11 +32,12 @@ function Form({ color, task, setTask, setAct }) {
       return console.log(error);
     }
   }
+
   return (
     <>
       <ToastContainer />
       <form
-        className={`form-${color} flex`}
+        className={`form-${colors} flex`}
         action="POST"
         onSubmit={onSubmitTask}
       >

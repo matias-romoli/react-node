@@ -1,53 +1,39 @@
-import { listTaskAll } from "../../utils/xfunction";
+import { colorContext } from "../../context/color/colorContext";
+import { TaskContext } from "../../context/task/taskContext";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
 import Typed from "react-typed";
 import Task from "./task";
 import Form from "./form";
 
-function Main({ color }) {
-  const [stateModal, setStateModal] = useState(false);
-  const [listTask, setLisTask] = useState([]);
+function Main() {
+  const { listTask, listAll } = useContext(TaskContext);
+  const {colors} = useContext(colorContext)
   const [act, setAct] = useState(false);
-  const [task, setTask] = useState("");
 
-  async function listAll() {
-    try {
-      const res = await listTaskAll();
-      const data = await res.json();
-      setLisTask(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
   useEffect(() => {
     listAll();
     setAct(false);
+    // eslint-disable-next-line
   }, [act]);
 
   return (
     <>
       <main className="main flex">
-        <div className={`container-main-${color} flex`}>
+        <div className={`container-main-${colors} flex`}>
           <Typed
-            className={`typed-${color}`}
+            className={`typed-${colors}`}
             strings={["Just do it."]}
             typeSpeed={60}
           />
         </div>
         <div className="form-main flex">
-          <Form color={color} task={task} setTask={setTask} setAct={setAct} />
+          <Form color={colors} setAct={setAct} />
           {listTask.map((data) => (
-            <Task
-              key={data.id}
-              data={data}
-              color={color}
-              setAct={setAct}
-              stateModal={stateModal}
-              setStateModal={setStateModal}
-            />
+            <Task key={data.id} data={data} setAct={setAct} />
           ))}
           {!listTask.length ? (
-            <div className={`notTask-${color} flex`}>
+            <div className={`notTask-${colors} flex`}>
               <p> There are no tasks.</p>
             </div>
           ) : null}

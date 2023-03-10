@@ -1,13 +1,15 @@
+import { colorContext } from "../context/color/colorContext";
 import Header from "../components/header/header";
 import Main from "../components/main/main";
-import { useState } from "react";
+import { useContext } from "react";
 
 function Home() {
-  const [colors, setColors] = useState("light");
+  const { colors } = useContext(colorContext);
+
   return (
     <div className={`body-${colors}`}>
-      <Header color={colors} setColors={setColors} />
-      <Main color={colors} />
+      <Header />
+      <Main />
     </div>
   );
 }
